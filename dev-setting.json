@@ -1,0 +1,5 @@
+{
+    "cronInterval": "2 minutes",
+    "reminderTime": 10,
+    "reminderUnit": "seconds",
+}
