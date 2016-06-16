@@ -34,3 +34,6 @@ random
 johanbrook:publication-collector
 dispatch:mocha-phantomjs
 twbs:bootstrap
+alanning:roles
+accounts-base
+accounts-password

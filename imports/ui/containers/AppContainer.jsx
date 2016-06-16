@@ -4,6 +4,8 @@ import { KnowledgeReminders } from '../../api/knowledges/knowledgereminders.js';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router'
 import { routerdefinition } from '../constants/router.js';
+import { PublicHeader } from '../components/PublicHeader.jsx';
+import { AuthenticatedHeader } from '../components/AuthenticatedHeader.jsx';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,7 +13,7 @@ class App extends React.Component {
     };
 
     render() {
-        let {loading, knowledgelist, reminderNum} = this.props;
+        let {loading, knowledgelist, reminderNum, hasUser} = this.props;
         return (
             <div>
                 <Navbar inverse>
@@ -22,12 +24,7 @@ class App extends React.Component {
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
-                        <Nav>
-                            <NavItem><Link to={"/"+routerdefinition.addreminder}>Add Knowledge</Link></NavItem>
-                            <NavItem>
-                                <Link to={"/"+routerdefinition.reminders}>Knowledge Reminders <Badge>{reminderNum}</Badge> </Link>
-                            </NavItem>
-                        </Nav>
+                        { hasUser ? <AuthenticatedHeader reminderNum={reminderNum}/> : <PublicHeader /> }
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
@@ -38,13 +35,15 @@ class App extends React.Component {
 }
 
 export default createContainer(() => {
-    const reminderHandle = Meteor.subscribe('knowledges.all');
+    const reminderHandle = Meteor.subscribe('knowledges.all', Meteor.user());
     const loading = !reminderHandle.ready();
+    const hasUser = Meteor.user();
     return {
         loading,
         knowledgelist: KnowledgeReminders.find({}, {
           sort: KnowledgeReminders.sortFields
         }).fetch() || [],
-        reminderNum: KnowledgeReminders.find({reminder: true}).count()
+        reminderNum: KnowledgeReminders.find({reminder: true}).count(),
+        hasUser
     };
 }, App);

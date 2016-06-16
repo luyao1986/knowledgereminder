@@ -1,6 +1,7 @@
-import React from 'react';
-import { Col, Thumbnail, Button, ProgressBar } from 'react-bootstrap';
-import { setKnowledgeReviewed } from '../../api/knowledges/methods.js';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Col, Thumbnail, Button, ProgressBar, FormControl, ControlLabel, FormGroup } from 'react-bootstrap';
+import { setKnowledgeReviewed, updateKnowledgeDescription } from '../../api/knowledges/methods.js';
 import { stage2color, stage2progress, reviewedcolor, total_stages } from '../../api/knowledges/knowledgereminders.js';
 import { Radium } from 'radium';
 import { Link } from 'react-router'
@@ -10,7 +11,12 @@ export class Knowledge extends React.Component {
         super(props);
     };
     setReviewed(_id) {
+        let description = ReactDOM.findDOMNode(this.refs.description).value
+        if(description !== '') {
+            updateKnowledgeDescription.call({_id, description})
+        }
         setKnowledgeReviewed.call({_id});
+        ReactDOM.findDOMNode(this.refs.description).value = '';
     };
     render() {
       let knowledge = this.props.knowledge;
@@ -20,9 +26,11 @@ export class Knowledge extends React.Component {
       return (
         <Col xs={12} md={12}>
           <Thumbnail responsive>
-              <h3 style={{color: color}}>{knowledge.title}</h3>
-              <h4><Link to={knowledge.url}>{knowledge.url}</Link></h4>
-              <p>{knowledge.description}</p>
+              <h4><Link style={{color: color}} to={knowledge.url}>{knowledge.title}</Link></h4>
+              <p style={{color: color}}>previous description: ${knowledge.description}</p>
+              <FormGroup controlId="description">
+                  <FormControl componentClass="textarea" placeholder="please write done your new understanding:" ref="description"/>
+              </FormGroup>
             <ProgressBar bsStyle="success" now={progress} label={`${step}/${total_stages+1}`}></ProgressBar>
             <p><Button bsStyle="primary" disabled={!knowledge.isReminder()} onClick={this.setReviewed.bind(this, knowledge._id)}>Review</Button></p>
           </Thumbnail>

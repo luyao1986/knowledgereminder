@@ -11,7 +11,7 @@ export const addReminder = new ValidatedMethod({
     }).validator(),
     run(knowledge) {
         console.log("add reminder:", knowledge);
-        return KnowledgeReminders.insert(knowledge);
+        return KnowledgeReminders.insert({...knowledge, createdBy: Meteor.userId()});
     },
 });
 
@@ -23,6 +23,19 @@ export const setKnowledgeReviewed = new ValidatedMethod({
     run({ _id }) {
         console.log("update knowledge reviewed of id:", _id);
         let updates = { reviewed:true, reminder:false };
+        return KnowledgeReminders.update({_id}, {$set: updates});
+    },
+});
+
+export const updateKnowledgeDescription = new ValidatedMethod({
+    name: 'knowledge.updateDescription',
+    validate: new SimpleSchema({
+        _id: { type: String },
+        description: { type: String },
+    }).validator(),
+    run({ _id, description }) {
+        console.log("update knowledge description of id:", _id);
+        let updates = { description };
         return KnowledgeReminders.update({_id}, {$set: updates});
     },
 });

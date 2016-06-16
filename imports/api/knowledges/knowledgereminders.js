@@ -35,6 +35,7 @@ KnowledgeReminders.attachSchema(new SimpleSchema({
     stage: { type: Number, defaultValue: 0, max:total_stages},          //total 7 stages
     reviewed: { type: Boolean, defaultValue: true},                     //the first time you add the knowledge means you have reviewed it
     reviewedAt: { type: Date, defaultValue: new Date()},                //camelCased field names
+    createdBy: { type: String, defaultValue: this.userId },
     reminder: { type: Boolean, defaultValue: false},                    //set reminder when some time later
 }));
 //state machine of (stage, reviewed, reminder) as below:
@@ -47,6 +48,7 @@ KnowledgeReminders.publicFields = {
     stage: 1,
     reviewed: 1,
     reviewedAt: 1,
+    createdBy: 1,
     reminder: 1,
 };
 KnowledgeReminders.sortFields = {
