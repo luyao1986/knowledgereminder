@@ -4,7 +4,6 @@ import moment from 'moment';
 
 //setKnowledgeReminder only used in server-side crontab job
 export const setKnowledgeReminder = (knowledge) => {  //
-  console.log("update knowledge reminder of:", knowledge);
   let updates = {reviewed:false, reminder:true, stage: knowledge.stage+1};
   return KnowledgeReminders.update({_id: knowledge._id}, {$set: updates});
 };

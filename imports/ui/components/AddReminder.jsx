@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Button, FormGroup, Label, ControlLabel, FormControl } from 'react-bootstrap';
 import { addReminder } from '../../api/knowledges/methods.js';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Bert } from 'meteor/themeteorchef:bert';
 
 export class AddReminder extends React.Component {
   constructor(props) {
@@ -15,7 +16,11 @@ export class AddReminder extends React.Component {
     let url = ReactDOM.findDOMNode(this.refs.url).value || `${Meteor.absoluteUrl("reminders")}`
     let description = ReactDOM.findDOMNode(this.refs.description).value
     let knowledge = {title, description, url};
-    addReminder.call(knowledge);
+    addReminder.call(knowledge, ()=>{ Bert.alert({
+      title: '+1 knowledge into reminder list',
+      type: 'info',
+      style: 'growl-top-right'
+    })});
     this.refs.title.value = "";
     this.refs.description.value = "";
     this.refs.url.value = "";

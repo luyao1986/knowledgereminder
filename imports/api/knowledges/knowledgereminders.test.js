@@ -17,8 +17,8 @@ if (Meteor.isServer) {
       it('builds correctly from factory', () => {
         const knowledge = Factory.create('knowledge');
         assert.typeOf(knowledge, 'object');
-        assert.typeOf(knowledge.description, 'test');
-        assert.typeOf(knowledge.stage, 0);
+        assert.equal(knowledge.description, 'test');
+        assert.equal(knowledge.stage, 0);
       });
     });
 
@@ -33,8 +33,8 @@ if (Meteor.isServer) {
       let { _id, reviewed } = Factory.create('knowledge', {reviewed: false});
       assert.equal(reviewed, false);
       setKnowledgeReviewed.call({_id});
-      { reviewed } = KnowledgeReminders.findOne({_id});
-      assert.equal(reviewed, true);
+      let updated_knowledge = KnowledgeReminders.findOne({_id});
+      assert.equal(updated_knowledge.reviewed, true);
     });
 
     describe('publications', () => {
