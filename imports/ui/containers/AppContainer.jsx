@@ -35,7 +35,7 @@ class App extends React.Component {
 }
 
 export default createContainer(() => {
-    const reminderHandle = Meteor.subscribe('knowledges.all', Meteor.user());
+    const reminderHandle = Meteor.subscribe('knowledges.all');
     const loading = !reminderHandle.ready();
     const hasUser = Meteor.user();
     return {

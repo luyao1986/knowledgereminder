@@ -29,7 +29,7 @@ export class Knowledge extends React.Component {
               <h4><Link style={{color: color}} to={knowledge.url}>{knowledge.title}</Link></h4>
               <p style={{color: color}}>previous description: ${knowledge.description}</p>
               <FormGroup controlId="description">
-                  <FormControl componentClass="textarea" placeholder="please write done your new understanding:" ref="description"/>
+                  <FormControl componentClass="textarea" placeholder="please write done your new understanding:" ref="description" disabled={!knowledge.isReminder()}/>
               </FormGroup>
             <ProgressBar bsStyle="success" now={progress} label={`${step}/${total_stages+1}`}></ProgressBar>
             <p><Button bsStyle="primary" disabled={!knowledge.isReminder()} onClick={this.setReviewed.bind(this, knowledge._id)}>Review</Button></p>

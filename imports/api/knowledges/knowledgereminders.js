@@ -4,7 +4,7 @@ import { Factory } from 'meteor/dburles:factory';
 import faker from 'faker';
 
 export const total_stages = 7;
-export const stage2color = ["#ff0000", "#ff9b00", "#ffff00", "#00ff00", "#0000ff", "#00ffff", "#ff00ff", "#ffffff"];
+export const stage2color = ["#ff0000", "#ff9b00", "#ffff00", "#00ff00", "#0000ff", "#00ffff", "#ff00ff", "#000000"];
 export const reviewedcolor = "#808080";
 export const stage2progress = [0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
 

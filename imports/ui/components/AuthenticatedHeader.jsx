@@ -19,7 +19,7 @@ export const AuthenticatedHeader = ({ reminderNum }) => (
                 <NavItem eventKey={ 2 } href="/addreminder">Add Knowledge</NavItem>
             </LinkContainer>
             <LinkContainer to="/reminders">
-                <NavItem eventKey={ 3 } href="/reminders">Knowledge Reminders <Badge>{reminderNum}</Badge></NavItem>
+                <NavItem eventKey={ 3 } href="/reminders">Reminders <Badge>{reminderNum}</Badge></NavItem>
             </LinkContainer>
         </Nav>
         <Nav pullRight>
